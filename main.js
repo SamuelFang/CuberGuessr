@@ -4860,6 +4860,18 @@ var information;
 var score;
 
 function start(){
+    if(localStorage.getItem("guessrgames") == null){
+        localStorage.setItem("guessrgames", 0);
+    }
+    if(localStorage.getItem("average") == null){
+        localStorage.setItem("average", 0);
+    }
+    if(localStorage.getItem("high") == null){
+        localStorage.setItem("high", 0);
+    }
+    document.getElementById("guessrgames").innerHTML = localStorage.getItem("guessrgames");
+    document.getElementById("average").innerHTML = localStorage.getItem("average");
+    document.getElementById("high").innerHTML = localStorage.getItem("high");
     seed = Math.floor(Math.random()*db.length)
     const queryString = window.location.search;
     if(queryString.length > 0){
@@ -4911,6 +4923,20 @@ function check(){
     document.getElementById("finalMessage").innerHTML = message;
     document.getElementById("information").innerHTML = information;
     document.getElementById("statsModal").style.display = "block";
+    if(!document.getElementById('input').disabled){
+        var prevTotal = parseInt(localStorage.getItem("guessrgames")) * parseFloat(localStorage.getItem("average"));
+
+        localStorage.setItem("guessrgames", parseInt(localStorage.getItem("guessrgames")) + 1);
+        document.getElementById("guessrgames").innerHTML = localStorage.getItem("guessrgames");
+
+        localStorage.setItem("average", Math.round((prevTotal + score) / parseInt(localStorage.getItem("guessrgames")) * 100) / 100);
+        document.getElementById("average").innerHTML = localStorage.getItem("average");
+
+        if(score > parseInt(localStorage.getItem("high"))){
+            localStorage.setItem("high", score);
+            document.getElementById("high").innerHTML = localStorage.getItem("high");
+        }
+    }
     document.getElementById('input').disabled = true;
 }
 

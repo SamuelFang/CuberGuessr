@@ -4870,13 +4870,11 @@ function start(){
     answer = extractNumber(link);
     var embedded = document.getElementById("embed");
     embedded.src = removeTitle(link);
-    console.log(answer);
 }
 
 function removeTitle(input){
     const regex = /title=(.*?)setup=/;
     const result = input.replace(regex, 'title=CuberGuessr' + seed + '&setup=');
-    console.log(result)
     return result;
 }
 
@@ -4891,14 +4889,14 @@ function extractNumber(input) {
 
 function check(){
     var guess = parseFloat(document.getElementById('input').value);
-    score = parseInt(5000 - (Math.abs(answer-guess) / answer) * 5000);
+    score = parseInt(5000 - (Math.abs(answer-guess) / answer) * 10000);
     if (score < 0) score = 0;
     information = "The correct answer is " + answer + ". Your guess of " + guess + " gave a score of " + score + "/5000.";
     message = "";
     if(guess < answer * 1.03 &&  guess > answer * .97){
         message = "Amazing!";
     }
-    else if(guess < answer * 1.05 &&  guess > answer * .95){
+    else if(guess < answer * 1.10 &&  guess > answer * .90){
         message = "Great!";
     }
     else if(guess < answer * 1.25 &&  guess > answer * .75){
